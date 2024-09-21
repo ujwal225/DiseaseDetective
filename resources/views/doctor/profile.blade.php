@@ -109,8 +109,9 @@
         <div class="flex flex-col items-center p-6">
             <!-- Profile Image -->
             <div class="h-32 w-32 rounded-full overflow-hidden border-4 border-white shadow-lg">
-                <img src="" alt="Profile Image" class="h-full w-full object-cover">
+                <img src="{{ asset($user->doctor->profilepic) }}" alt="Profile Image" class="h-full w-full object-cover">
             </div>
+
             <h2 class="mt-4 text-2xl font-semibold">Dr. {{$user->first_name}} {{$user->last_name}}</h2>
             <p class="text-sm text-gray-500">{{$user->doctor->specialization}}</p>
         </div>
@@ -135,9 +136,9 @@
 
                 <!-- Address Section -->
                 <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">Phone</dt>
+                    <dt class="text-sm font-medium text-gray-500">Address</dt>
                     <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                        {{ $user->doctor->address ?? 'Not provided' }}
+                        {{ $user->doctor->location ?? 'Not provided' }}
                     </dd>
                 </div>
 
@@ -151,7 +152,7 @@
 
                 <!-- Experience Section -->
                 <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">Experience</dt>
+                    <dt class="text-sm font-medium text-gray-500">Experience in years</dt>
                     <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                         {{ $user->doctor->experience ?? 'Not provided' }}
                     </dd>
@@ -161,17 +162,20 @@
                 <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm font-medium text-gray-500">Certificates</dt>
                     <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                        @if($user->doctor->certificates && count($user->doctor->certificates) > 0)
-                            <ul class="list-disc list-inside space-y-1">
-                                @foreach($user->doctor->certificates as $certificate)
-                                    <li>{{ $certificate }}</li>
-                                @endforeach
-                            </ul>
+                        @if($user->doctor->certificate)
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+
+                                    <div class="border rounded-lg overflow-hidden shadow">
+                                        <img src="{{ asset($user->doctor->certificate) }}" alt="Certificate Image" class="w-full h-32 object-cover">
+                                    </div>
+
+                            </div>
                         @else
                             <p class="text-gray-500">Not provided</p>
                         @endif
                     </dd>
                 </div>
+
             </dl>
         </div>
 

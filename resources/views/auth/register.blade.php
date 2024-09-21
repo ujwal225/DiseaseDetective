@@ -11,9 +11,7 @@
 <div class="m-auto mt-14 mb-5 flex w-full max-w-4xl overflow-hidden rounded-lg bg-purple-50 shadow-lg">
     <!-- Left Side -->
     <div class="relative flex w-1/3 flex-col items-center justify-center rounded-lg bg-gradient-to-b from-green-300 to-green-700 p-8 text-white">
-        <div class="absolute left-4 top-4">
-            <img src="{{asset('/images/bg_image/lolo-removebg-preview.png')}}" alt="logo" class="w-20 h-20"/>
-        </div>
+
         <h2 class="mb-4 text-purple-100 text-center text-2xl font-bold">Fresh food, vibrant life awaits.</h2>
         <div class="relative h-10 w-72">
             <!-- Placeholder for 3D illustration -->

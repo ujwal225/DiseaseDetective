@@ -48,11 +48,23 @@
     <div class="w-full max-w-4xl form-container p-8 rounded-lg">
         <h2 class="text-3xl font-semibold mb-6 text-gray-800">Edit Profile</h2>
 
-        <form action="#" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('doctor.update', $user->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
             <!-- User Information -->
+            <div class="mb-5 flex space-x-4">
+                <div class="flex-1">
+                    <label for="first_name" class="block text-sm font-medium text-gray-700">First Name</label>
+                    <input type="text" id="first_name" name="first_name" value="{{ old('first_name', $user->first_name) }}" class="input-field mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                </div>
+
+                <div class="flex-1">
+                    <label for="last_name" class="block text-sm font-medium text-gray-700">Last Name</label>
+                    <input type="text" id="last_name" name="last_name" value="{{ old('last_name', $user->last_name) }}" class="input-field mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                </div>
+            </div>
+
             <div class="mb-5">
                 <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
                 <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}" class="input-field mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
@@ -90,7 +102,7 @@
 
             <div class="mb-5">
                 <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                <textarea id="description" name="description" rows="4" class="input-field mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"></textarea>
+                <textarea id="description" name="description" rows="4" class="input-field mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">{{$user->doctor->description}}</textarea>
             </div>
 
             <button type="submit" class="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">

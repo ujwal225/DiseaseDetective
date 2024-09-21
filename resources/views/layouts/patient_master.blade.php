@@ -51,5 +51,6 @@
 <footer class="bg-blue-700 p-4 text-center text-white mt-auto">
     &copy; 2024 Disease Detective. All rights reserved.
 </footer>
+@yield('script')
 </body>
 </html>

@@ -51,7 +51,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="block py-2 px-3 bg-blue-100 rounded hover:bg-blue-200 flex items-center">
+                    <a href="{{route('doctor.schedule')}}" class="block py-2 px-3 bg-blue-100 rounded hover:bg-blue-200 flex items-center">
                         <i class="fas fa-clock mr-2"></i> Manage Schedule
                     </a>
                 </li>

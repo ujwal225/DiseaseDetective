@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DiseasePredictionController;
+use App\Http\Controllers\Patient\AppointmentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,9 @@ Route::delete('/admin/{id}/destroy', [\App\Http\Controllers\Admin\DoctorControll
 Route::get('/doctor/dashboard', [\App\Http\Controllers\Doctor\DoctorController::class, 'homePage'])->name('doctor.dashboard')->middleware('auth');
 Route::get('/doctor/profile', [\App\Http\Controllers\Doctor\DoctorController::class, 'profile'])->name('doctor.profile')->middleware('auth');
 Route::get('/doctor/profile/{id}/edit', [\App\Http\Controllers\Doctor\DoctorController::class, 'edit'])->name('doctor.edit')->middleware('auth');
+Route::put('/doctor/profile/{id}', [\App\Http\Controllers\Doctor\DoctorController::class, 'update'])->name('doctor.update')->middleware('auth');
+
+
 
 Route::get('/patient/dashboard', [\App\Http\Controllers\Patient\PatientController::class, 'homePage'])->name('patient.dashboard')->middleware('auth');
 Route::get('/patient/preform', [\App\Http\Controllers\Patient\PatientController::class, 'preform'],)->name('patient.preform')->middleware('auth');
@@ -34,3 +38,12 @@ Route::get('/patient/preform', [\App\Http\Controllers\Patient\PatientController:
 
 
 Route::post('/patient/predict-disease', [DiseasePredictionController::class, 'predict'])->name('patient.predict.disease');
+
+Route::get('/doctor/schedule', [\App\Http\Controllers\Doctor\DoctorController::class, 'scheduleIndex'])->name('doctor.schedule')->middleware('auth');
+Route::post('/doctor/scheduleStore', [\App\Http\Controllers\Doctor\DoctorController::class, 'schedule'])->name('doctor.schedule.store')->middleware('auth');
+Route::delete('/doctor/schedule/{id}', [\App\Http\Controllers\Doctor\DoctorController::class, 'scheduleDelete'])->name('doctor.schedule.delete')->middleware('auth');
+
+Route::get('/patient/{doctorId}/book_appointment', [\App\Http\Controllers\Patient\AppointmentController::class, 'showDoctorDetails'])->name('patient.book_appointment')->middleware('auth');
+Route::get('/api/patient/available-slots/{doctorId}/{date}', [\App\Http\Controllers\Patient\AppointmentController::class, 'getAvailableSlots'])->name('patient.available.slots');
+
+Route::post('/patient/book_appointment', [\App\Http\Controllers\Patient\AppointmentController::class, 'store'])->name('patient.book_appointment.store')->middleware('auth');

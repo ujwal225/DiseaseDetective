@@ -7,9 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
 </head>
 <body class="flex h-screen items-center justify-center bg-cover bg-center bg-fixed" style="background-image: linear-gradient(to top, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.5) 50%), url('{{ asset('images/bg_image/lg-background.jpg') }}');">
-<div class="absolute left-4 top-4">
-    <img src="{{asset('/images/bg_image/lolo-removebg-preview.png')}}" alt="logo" class="w-20 h-20"/>
-</div>
+
 
 <div class="flex w-full max-w-md flex-col items-center justify-center bg-white bg-opacity-80 p-8 rounded-lg shadow-lg">
     <h2 class="mb-4 text-3xl font-bold text-green-600">Login</h2>
