@@ -34,6 +34,10 @@ class AppointmentController extends Controller
         $dateString = $date ;
         $dateOnly = str_replace('date=', '', $dateString);
 
+        // Get the current date and time in the specified timezone
+        $currentDateTime = Carbon::now($timezone);
+        $selectedDate = Carbon::parse($dateOnly, $timezone);
+
         // Convert selected date to day of the week, specifying timezone
         $dayOfWeek =Carbon::parse($dateOnly, 'Asia/Kathmandu')->format('l');
 
@@ -48,9 +52,16 @@ class AppointmentController extends Controller
 
         // Generate time slots excluding 2 PM to 3 PM (adjust break time as needed)
         $startTime = Carbon::parse($schedule->start_time, $timezone);
-        $endTime = Carbon::parse($schedule->end_time, $timezone);
+        $endTime = Carbon::parse($schedule->end_time, $timezone)->subHour();
         $breakStart = Carbon::createFromTime(13, 0, 0, $timezone); // 1:00 PM
         $breakEnd = Carbon::createFromTime(13, 59, 59, $timezone);   // 2:00 PM
+
+        // If the selected day is today, adjust the start time to the current time
+        if ($selectedDate->isToday()) {
+            if ($currentDateTime->greaterThan($startTime)) {
+                $startTime = $currentDateTime; // Set start time to current time if it's in the past
+            }
+        }
 
         $timeSlots = [];
         while ($startTime->lt($endTime)) {
@@ -98,20 +109,37 @@ class AppointmentController extends Controller
             'appointment_time' => 'required'
         ]);
 
-        // Store the appointment
-        Appointment::create([
+        $user_id = auth()->id();
+        $patient = Patient::where('user_id', $user_id)->first();
 
-            $user_id = auth()->id(),
-            $patient = Patient::where('user_id', $user_id)->first(),
+        // Check if user already has an upcoming appointment with the same doctor
+        $existingAppointment = Appointment::where('patient_id', $patient->id)
+            ->where('doctor_id', $request->doctor_id)
+            ->where(function($query) use ($request) {
+                $query->where('appointment_date', '>', now()->toDateString())
+                    ->orWhere(function($subQuery) use ($request) {
+                        $subQuery->where('appointment_date', '=', $request->appointment_date)
+                            ->where('appointment_time', '>', now()->format('H:i'));
+                    });
+            })
+            ->first();
+
+        // If there's an existing upcoming appointment, return an error
+        if ($existingAppointment) {
+            return redirect()->back()->withErrors('You already have an appointment with this doctor. Please wait until your current appointment is completed or expired.');
+        }
+
+        // Store the new appointment if no existing appointment
+        Appointment::create([
             'patient_id' => $patient->id,
             'doctor_id' => $request->doctor_id,
             'appointment_date' => $request->appointment_date,
             'appointment_time' => $request->appointment_time
-
         ]);
 
         return redirect()->route('patient.dashboard')->with('success', 'Appointment booked successfully!');
     }
+
 
     /**
      * Display the specified resource.

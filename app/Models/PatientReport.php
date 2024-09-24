@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PatientReport extends Model
 {
@@ -15,5 +16,10 @@ class PatientReport extends Model
     protected $casts = [
         'symptoms' => 'array',
     ];
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class, 'patient_id'); // 'patient_id' is the foreign key
+    }
 
 }

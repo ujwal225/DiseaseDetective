@@ -46,7 +46,7 @@
             </h2>
             <ul class="space-y-2">
                 <li>
-                    <a href="#" class="block py-2 px-3 bg-blue-100 rounded hover:bg-blue-200 flex items-center">
+                    <a href="{{route('doctor.view_appointment')}}" class="block py-2 px-3 bg-blue-100 rounded hover:bg-blue-200 flex items-center">
                         <i class="fas fa-calendar-alt mr-2"></i> View Appointments
                     </a>
                 </li>
@@ -55,8 +55,15 @@
                         <i class="fas fa-clock mr-2"></i> Manage Schedule
                     </a>
                 </li>
+
                 <li>
-                    <a href="#" class="block py-2 px-3 bg-blue-100 rounded hover:bg-blue-200 flex items-center">
+                    <a href="{{route('doctor.manageAppointment')}}" class="block py-2 px-3 bg-blue-100 rounded hover:bg-blue-200 flex items-center">
+                        <i class="fas fa-calendar-check mr-2"></i> Manage Appointments
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{route('doctor.profile')}}" class="block py-2 px-3 bg-blue-100 rounded hover:bg-blue-200 flex items-center">
                         <i class="fas fa-id-card mr-2"></i> View Profile
                     </a>
                 </li>

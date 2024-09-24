@@ -125,27 +125,28 @@
                 $doctors = session('doctors');
             @endphp
 
-            <div id="doctor-suggestions" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg p-6 rounded-l-lg border-l border-gray-200 overflow-y-auto hidden z-50">
-                <h3 class="text-lg font-semibold mb-4">Suggested Doctors</h3>
+            <div id="doctor-suggestions" class="fixed top-0 right-0 h-full w-96 bg-white shadow-2xl p-6 rounded-l-lg border-l border-gray-300 overflow-y-auto z-50">
+                <h3 class="text-xl font-semibold text-gray-800 mb-6 text-green-700"><b>Suggested Doctors</b></h3>
 
                 <ul>
                     @if(count($doctors) > 0)
                         @foreach($doctors as $doctor)
-                            <div class="flex flex-col items-center mb-4 border-b pb-4">
+                            <div class="flex flex-col bg-gray-50 rounded-lg shadow-md mt-20 mb-4 border border-gray-200 transition-transform transform hover:scale-105 ">
                                 <!-- Doctor Image -->
-                                <img src="{{asset($doctor->profilepic)}}" alt="Doctor" class="w-12 h-12 rounded-full mb-2">
+                                <img src="{{ asset($doctor->profilepic) }}" alt="Doctor" class="w-24 h-24 rounded-full mx-auto -mt-12 border-4 border-indigo-500 shadow-lg">
 
                                 <!-- Doctor Info -->
-                                <div class="text-center flex-grow">
-                                    <p class="text-sm font-bold">Dr. {{$doctor->User->first_name}} {{$doctor->User->last_name}}</p>
-                                    <p class="text-xs text-gray-600">Specialization: {{$doctor->specialization}}</p>
-                                    <p class="text-xs text-gray-600">Location: {{$doctor->location}}</p>
+                                <div class="text-center flex-grow p-4">
+                                    <p class="text-lg font-bold text-gray-800">Dr. {{$doctor->User->first_name}} {{$doctor->User->last_name}}</p>
+                                    <p class="text-sm text-gray-600">Specialization: <span class="font-medium text-indigo-600">{{$doctor->specialization}}</span></p>
+                                    <p class="text-sm text-gray-600">Location: {{$doctor->location}}</p>
                                 </div>
 
                                 <!-- View Doctor Button -->
-                                <div class="mt-auto">
-                                    <a href="{{route('patient.book_appointment', ['doctorId' => $doctor->User->id])}}" class="bg-blue-600 text-white py-1 px-3 text-sm rounded hover:bg-blue-700 transition-colors duration-200">View Doctor</a>
+                                <div class="mb-4 flex justify-center">
+                                    <a href="{{ route('patient.book_appointment', ['doctorId' => $doctor->id]) }}" class="bg-indigo-600 text-white py-2 px-4 text-sm rounded-lg hover:bg-indigo-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2">View Doctor</a>
                                 </div>
+
                             </div>
                         @endforeach
                     @else
@@ -155,7 +156,7 @@
                 </ul>
 
                 <!-- Close Button for Popup -->
-                <button id="close-popup" class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2">X</button>
+                <button id="close-popup" class="absolute top-4 right-4 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-colors duration-200">X</button>
             </div>
         @endif
     </div>

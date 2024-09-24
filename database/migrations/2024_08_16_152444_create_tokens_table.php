@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('appointment_id')->constrained('appointments')->onDelete('cascade');
             $table->string('token_number')->unique();
+            $table->string('status')->default('active');
             $table->timestamps();
         });
     }

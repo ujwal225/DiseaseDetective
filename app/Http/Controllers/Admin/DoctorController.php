@@ -133,6 +133,6 @@ class DoctorController extends Controller
             request()->session()->flash('error', 'Doctor deletion failed.');
         }
 
-        return redirect()->route('admin.listdoctor');
+        return redirect()->back();
     }
 }

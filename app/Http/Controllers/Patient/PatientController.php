@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Patient;
 
 use App\Http\Controllers\Controller;
+use App\Models\Appointment;
+use App\Models\Token;
 use Illuminate\Http\Request;
 
 class PatientController extends Controller
@@ -31,6 +33,41 @@ class PatientController extends Controller
         ];
         return view('patient.preform',compact('symptoms'));
     }
+
+    public function showAppointment()
+    {
+        $user = auth()->user();
+        $patient = $user->patient;
+
+        // Get the current date and time
+        $currentDateTime = now();
+
+        // Fetch appointments that are not expired or outdated
+        $appointments = Appointment::where('patient_id', $patient->id)
+            ->where(function ($query) use ($currentDateTime) {
+                $query->where('appointment_date', '>', $currentDateTime->toDateString())
+                    ->orWhere(function ($query) use ($currentDateTime) {
+                        $query->where('appointment_date', '=', $currentDateTime->toDateString())
+                            ->where('appointment_time', '>', $currentDateTime->toTimeString());
+                    });
+            })
+            ->orderBy('appointment_date', 'desc')
+            ->orderBy('appointment_time', 'desc')
+            ->paginate(5);
+
+        return view('patient.reqAppointment', compact('appointments'));
+    }
+
+
+
+    public function showToken($appointment_id)
+    {
+        $token = Token::where('appointment_id', $appointment_id)->with('appointment')->first();
+
+        return view('patient.viewToken', compact('token'));
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
@@ -76,6 +113,13 @@ class PatientController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $appointment = Appointment::find($id);
+        if($appointment->delete()){
+            request()->session()->flash('success', 'appointment deleted successfully.');
+        }else{
+            request()->session()->flash('error', 'appointment deletion failed.');
+        }
+
+        return redirect()->route('patient.reqAppointment');
     }
 }

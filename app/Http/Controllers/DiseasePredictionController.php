@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Patient\PatientController;
 use App\Models\PatientReport;
 use App\Models\Doctor; // Import the Doctor model
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -62,7 +63,9 @@ class DiseasePredictionController extends Controller
 
             // Store the prediction in the patient_report table
             PatientReport::create([
-                'patient_id' => auth()->id(),
+                $userId = auth()->id(),
+            $patientId = User::findOrFail($userId)->patient->id,
+                'patient_id' => $patientId,
                 'symptoms' => json_encode($esymptoms),
                 'predicted_disease' => $predictedDisease,
             ]);

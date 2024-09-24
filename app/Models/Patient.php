@@ -26,4 +26,9 @@ class Patient extends Model
     {
         return $this->hasMany(Appointment::class);
     }
+
+    public function reports()
+    {
+        return $this->hasMany(PatientReport::class, 'patient_id'); // 'patient_id' is the foreign key
+    }
 }
