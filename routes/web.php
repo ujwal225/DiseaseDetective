@@ -39,7 +39,11 @@ Route::post('/patient/predict-disease', [DiseasePredictionController::class, 'pr
 Route::get('/patient/reqAppointment', [\App\Http\Controllers\Patient\PatientController::class, 'showAppointment'])->name('patient.reqAppointment')->middleware('auth');
 Route::get('/patient/viewToken/{appointment_id}', [\App\Http\Controllers\Patient\PatientController::class, 'showToken'])->name('patient.showToken')->middleware('auth');
 Route::delete('/patient/{id}/destroy', [\App\Http\Controllers\Patient\PatientController::class, 'destroy'])->name('patient.appointment.destroy')->middleware('auth');
+Route::get('/patient/historyAppointment', [\App\Http\Controllers\Patient\PatientController::class, 'showHistoryAppointment'])->name('patient.historyAppointment')->middleware('auth');
 
+Route::get('/patient/profile', [\App\Http\Controllers\Patient\PatientController::class, 'profile'])->name('patient.profile')->middleware('auth');
+Route::get('/patient/profile/{id}/edit', [\App\Http\Controllers\Patient\PatientController::class, 'edit'])->name('patient.edit')->middleware('auth');
+Route::put('/patient/profile/{id}', [\App\Http\Controllers\Patient\PatientController::class, 'update'])->name('patient.update')->middleware('auth');
 
 Route::get('/doctor/schedule', [\App\Http\Controllers\Doctor\DoctorController::class, 'scheduleIndex'])->name('doctor.schedule')->middleware('auth');
 Route::post('/doctor/scheduleStore', [\App\Http\Controllers\Doctor\DoctorController::class, 'schedule'])->name('doctor.schedule.store')->middleware('auth');
@@ -55,3 +59,6 @@ Route::get('/api/patient/available-slots/{doctorId}/{date}', [\App\Http\Controll
 Route::post('/patient/book_appointment', [\App\Http\Controllers\Patient\AppointmentController::class, 'store'])->name('patient.book_appointment.store')->middleware('auth');
 
 
+
+Route::get('/doctor/verifyToken', [\App\Http\Controllers\Doctor\DoctorController::class, 'viewVerifyToken'])->name('doctor.verifyToken')->middleware('auth');
+Route::patch('/doctor/verifyToken/{id}/update', [\App\Http\Controllers\Doctor\DoctorController::class, 'updateVerifyToken'])->name('doctor.verifyToken.update')->middleware('auth');

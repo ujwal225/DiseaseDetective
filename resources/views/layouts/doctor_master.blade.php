@@ -50,6 +50,14 @@
                         <i class="fas fa-calendar-alt mr-2"></i> View Appointments
                     </a>
                 </li>
+
+                <li>
+                    <a href="{{route('doctor.verifyToken')}}" class="block py-2 px-3 bg-blue-100 rounded hover:bg-blue-200 flex items-center">
+                        <i class="fas fa-check mr-2"></i> Verify Token
+                    </a>
+                </li>
+
+
                 <li>
                     <a href="{{route('doctor.schedule')}}" class="block py-2 px-3 bg-blue-100 rounded hover:bg-blue-200 flex items-center">
                         <i class="fas fa-clock mr-2"></i> Manage Schedule

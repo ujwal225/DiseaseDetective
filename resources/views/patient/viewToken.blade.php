@@ -8,7 +8,7 @@
         <div class="flex justify-between items-center border-b pb-4 mb-4">
             <h2 class="text-2xl font-bold mx-5 text-gray-800">Appointment Token</h2>
             <span class="bg-blue-600 text-white py-2 px-5 rounded-full font-bold text-lg">
-                <i class="fas fa-ticket-alt"></i> {{ $token->token_number }}
+                <i class="fas fa-ticket-alt"></i> {{ $token->token_number  }}
             </span>
         </div>
 
@@ -41,7 +41,7 @@
         <div class="border-t pt-4 mt-4">
             <h3 class="text-lg font-semibold text-gray-800">Patient Details</h3>
             <p class="text-gray-600">
-                <i class="fas fa-user text-blue-600 ml-2 mr-3"></i><span class="font-semibold">Name:</span> {{ $token->appointment->patient->user->first_name }}
+                <i class="fas fa-user text-blue-600 ml-2 mr-3"></i><span class="font-semibold">Name:</span> {{ $token->appointment->patient->user->first_name }} {{ $token->appointment->patient->user->last_name }}
 
             </p>
         </div>

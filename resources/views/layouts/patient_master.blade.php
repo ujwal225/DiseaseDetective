@@ -21,22 +21,43 @@
     <div class="container mx-auto flex justify-between items-center">
         <h1 class="text-white text-2xl font-bold">Patient Dashboard</h1>
         <div class="flex items-center space-x-6">
-            <a href="{{route('patient.dashboard')}}" class="text-white flex items-center hover:text-gray-200">
-                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7m-9 4v8m-4-4h4m-4 4h4"></path></svg>
+            <a href="{{ route('patient.dashboard') }}" class="text-white flex items-center hover:text-gray-200">
+                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7m-9 4v8m-4-4h4m-4 4h4"></path>
+                </svg>
                 Home
             </a>
-            <a href="#" class="text-white flex items-center hover:text-gray-200">
-                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A9 9 0 0112 15m0 0a9 9 0 017.879 2.804M12 15v5m0 0v5m0-10a9 9 0 017.879-2.804M12 15a9 9 0 00-7.879 2.804M12 15a9 9 0 00-7.879 2.804m7.879-2.804V5m0 0V5m0 0V5m0 0a9 9 0 017.879-2.804A9 9 0 0012 5z"></path></svg>
-                Manage Profile
+
+            <a href="{{route('patient.preform')}}" class="text-white flex items-center hover:text-gray-200">
+                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v3m0 12v3m-7-7h3m12 0h3M5 12a7 7 0 0114 0m-14 0a7 7 0 0114 0M12 6a6 6 0 100 12 6 6 0 000-12z"></path>
+                </svg>
+                Predict Disease
             </a>
-{{--            <a href="#" class="text-white flex items-center hover:text-gray-200">--}}
-{{--                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6-4v1m-6 4v1"></path></svg>--}}
-{{--                Logout--}}
-{{--            </a>--}}
+            <a href="{{route('patient.reqAppointment')}}" class="text-white flex items-center hover:text-gray-200">
+                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18m-3 5H3"></path>
+                </svg>
+                Appointments
+            </a>
+            <a href="{{route('patient.historyAppointment')}}" class="text-white flex items-center hover:text-gray-200">
+                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h18m-3 6H3"></path>
+                </svg>
+                History
+            </a>
+            <a href="{{route('patient.profile')}}" class="text-white flex items-center hover:text-gray-200">
+                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A9 9 0 0112 15m0 0a9 9 0 017.879 2.804M12 15v5m0 0v5m0-10a9 9 0 017.879-2.804M12 15a9 9 0 00-7.879 2.804M12 15a9 9 0 00-7.879 2.804m7.879-2.804V5m0 0V5m0 0V5m0 0a9 9 0 017.879-2.804A9 9 0 0012 5z"></path>
+                </svg>
+                Profile
+            </a>
             <a class="text-white flex items-center hover:text-gray-200" href="{{ route('logout') }}"
                onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6-4v1m-6 4v1"></path></svg>
+                       document.getElementById('logout-form').submit();">
+                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6-4v1m-6 4v1"></path>
+                </svg>
                 Logout
             </a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -45,6 +66,7 @@
         </div>
     </div>
 </nav>
+
 @yield('content')
 
 

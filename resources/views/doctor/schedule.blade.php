@@ -80,6 +80,26 @@
 
 @section('content')
     <div class="max-w-4xl mx-auto mt-4 lg:mt-8">
+        @if(session('error'))
+            <div class="bg-red-500 text-white p-4 rounded-lg mb-4">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if(session('success'))
+            <div class="bg-green-500 text-white p-4 rounded-lg mb-4">
+                {{ session('success') }}
+            </div>
+        @endif
+            @if ($errors->any())
+                <div class="bg-red-500 text-white p-4 rounded-lg mb-4">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
         <!-- Switch Buttons -->
         <div class="flex justify-center space-x-4 mb-4 lg:mb-8">
             <button id="showFormButton" class="px-3 py-2 lg:px-4 lg:py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300">
@@ -159,7 +179,7 @@
                 </table>
             </div>
         </div>
-    </div>
+
 
     <script>
         // Get the elements
@@ -179,5 +199,8 @@
             scheduleForm.classList.add('hidden');
         });
     </script>
+
+
+
 
 @endsection

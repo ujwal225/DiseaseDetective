@@ -31,7 +31,7 @@ class AppointmentController extends Controller
     {
         // Set the default timezone
         $timezone = 'Asia/Kathmandu';
-        $dateString = $date ;
+        $dateString = $date;
         $dateOnly = str_replace('date=', '', $dateString);
 
         // Get the current date and time in the specified timezone
@@ -39,7 +39,7 @@ class AppointmentController extends Controller
         $selectedDate = Carbon::parse($dateOnly, $timezone);
 
         // Convert selected date to day of the week, specifying timezone
-        $dayOfWeek =Carbon::parse($dateOnly, 'Asia/Kathmandu')->format('l');
+        $dayOfWeek = Carbon::parse($dateOnly, 'Asia/Kathmandu')->format('l');
 
         // Fetch doctor's schedule for the selected day
         $schedule = Schedule::where('doctor_id', $doctorId)
@@ -52,20 +52,30 @@ class AppointmentController extends Controller
 
         // Generate time slots excluding 2 PM to 3 PM (adjust break time as needed)
         $startTime = Carbon::parse($schedule->start_time, $timezone);
-        $endTime = Carbon::parse($schedule->end_time, $timezone)->subHour();
-        $breakStart = Carbon::createFromTime(13, 0, 0, $timezone); // 1:00 PM
-        $breakEnd = Carbon::createFromTime(13, 59, 59, $timezone);   // 2:00 PM
+        $endTime = Carbon::parse($schedule->end_time, $timezone);
+        $breakStart = Carbon::createFromTime(14, 0, 0, $timezone); // 2:00 PM
+        $breakEnd = Carbon::createFromTime(14, 59, 59, $timezone);   // 3:00 PM
 
-        // If the selected day is today, adjust the start time to the current time
+        // Handle the overnight case where the schedule ends the next day
+        if ($endTime->lessThan($startTime)) {
+            $endTime->addDay(); // Add a day to end time if it is less than start time
+        }
+
+        // If the selected day is today, adjust the start time
         if ($selectedDate->isToday()) {
+            // If the current time is within the current hour, set the start time to the next full hour
             if ($currentDateTime->greaterThan($startTime)) {
-                $startTime = $currentDateTime; // Set start time to current time if it's in the past
+                if ($currentDateTime->minute >= 0 && $currentDateTime->minute < 59) {
+                    $startTime = $currentDateTime->copy()->addHour()->startOfHour(); // Move to the next full hour
+                } else {
+                    $startTime = $currentDateTime->copy()->startOfHour(); // Current hour is still valid
+                }
             }
         }
 
         $timeSlots = [];
         while ($startTime->lt($endTime)) {
-            $formattedTime = $startTime->format('H:i'); // Adjust format if needed
+            $formattedTime = $startTime->format('H:i'); // Format as required
 
             // Skip break time (2 PM to 3 PM)
             if ($startTime->between($breakStart, $breakEnd)) {
@@ -79,6 +89,7 @@ class AppointmentController extends Controller
                 ->where('appointment_time', $formattedTime)
                 ->exists();
 
+            // If the time slot is not booked, add it to the available slots
             if (!$appointmentExists) {
                 $timeSlots[] = $formattedTime; // Add available time slot
             }
@@ -89,6 +100,7 @@ class AppointmentController extends Controller
 
         return response()->json($timeSlots);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -137,7 +149,7 @@ class AppointmentController extends Controller
             'appointment_time' => $request->appointment_time
         ]);
 
-        return redirect()->route('patient.dashboard')->with('success', 'Appointment booked successfully!');
+        return redirect()->route('patient.reqAppointment')->with('success', 'Appointment booked successfully!');
     }
 
 
